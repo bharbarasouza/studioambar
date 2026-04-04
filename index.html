@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Ambar - Nail Designer</title>
+<meta name="description" content="Studio Ambar - Nail art exclusiva em Sao Paulo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blush:#f7ede8;--rose:#e8c4b8;--dusty:#d4a5a0;
+  --mauve:#c17c74;--deep:#8b4a4a;--ink:#2d1f1f;
+  --cream:#fdf8f5;--warm:#f9f0eb;--sand:#ede0d4;
+  --muted:#9c7070;--border:rgba(193,124,116,0.18);
+  --fs:"Playfair Display",serif;--fb:"Jost",sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--fb);overflow-x:hidden;font-weight:300;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;transition:background .3s;}
+nav.scrolled{background:rgba(253,248,245,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--fs);font-size:1.2rem;font-weight:400;color:var(--ink);text-decoration:none;}
+.nav-logo em{font-style:italic;color:var(--mauve);}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--mauve);}
+.nav-book{font-size:0.62rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.5rem;border:1px solid var(--mauve);color:var(--mauve);text-decoration:none;transition:background .3s,color .3s;}
+.nav-book:hover{background:var(--mauve);color:#fff;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);border-radius:2px;transition:transform .25s,opacity .25s;}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mob-menu{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(253,248,245,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-direction:column;padding:1rem 2rem 2rem;}
+.mob-menu.open{display:flex;}
+.mob-menu a{font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:.85rem 0;border-bottom:1px solid var(--border);transition:color .2s;}
+.mob-menu a:last-child{border-bottom:none;}
+
+/* HERO */
+.hero{height:100vh;min-height:640px;position:relative;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.hero-img-col{position:relative;overflow:hidden;background:linear-gradient(160deg,#f0dbd4 0%,#d9b8af 50%,#c9a99a 100%);}
+.hero-img-svg{width:100%;height:100%;display:block;}
+.hero-title-wrap{position:absolute;bottom:0;left:0;right:0;padding:0 3rem 4rem;display:flex;align-items:flex-end;justify-content:flex-start;z-index:10;pointer-events:none;}
+.hero-h1{font-family:var(--fs);font-size:clamp(3.5rem,7vw,8rem);font-weight:400;line-height:0.88;letter-spacing:-0.03em;color:var(--ink);mix-blend-mode:multiply;}
+.hero-h1 em{font-style:italic;color:var(--mauve);}
+.hero-h1 span{display:block;}
+.hero-right-col{background:var(--cream);display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 4rem;position:relative;}
+.hero-eyebrow{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--mauve);margin-bottom:1rem;font-weight:500;}
+.hero-desc{font-size:1rem;color:var(--muted);line-height:1.85;max-width:340px;margin-bottom:2.5rem;}
+.hero-actions{display:flex;flex-direction:column;gap:0.75rem;align-items:flex-start;}
+.btn-fill{font-family:var(--fb);font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem 2rem;background:var(--mauve);color:#fff;text-decoration:none;transition:background .3s;display:inline-block;}
+.btn-fill:hover{background:var(--deep);}
+.btn-line{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:color .2s;}
+.btn-line::after{content:"downarrow";}
+.btn-line:hover{color:var(--mauve);}
+.hero-stat-row{position:absolute;top:3rem;right:3rem;display:flex;flex-direction:column;gap:1.5rem;align-items:flex-end;}
+.hero-stat{text-align:right;}
+.hero-stat-n{font-family:var(--fs);font-size:2rem;font-weight:400;font-style:italic;color:var(--mauve);line-height:1;}
+.hero-stat-l{font-size:0.58rem;letter-spacing:0.1em;color:var(--muted);}
+.scroll-hint{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.4rem;z-index:5;}
+.scroll-hint-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--mauve),transparent);animation:sh 2s ease-in-out infinite;}
+@keyframes sh{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* GALLERY STRIP */
+.gallery-strip{display:flex;height:320px;overflow-x:auto;scrollbar-width:none;cursor:grab;background:var(--sand);gap:3px;}
+.gallery-strip::-webkit-scrollbar{display:none;}
+.gallery-strip.grabbing{cursor:grabbing;}
+.gallery-item{flex:0 0 250px;position:relative;overflow:hidden;}
+.gallery-item.wide{flex:0 0 360px;}
+.gallery-item-inner{width:100%;height:100%;transition:transform .5s ease;}
+.gallery-item:hover .gallery-item-inner{transform:scale(1.05);}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1rem;background:linear-gradient(to top,rgba(139,74,74,0.7),transparent);font-family:var(--fs);font-size:0.78rem;font-style:italic;color:rgba(255,255,255,0.9);opacity:0;transition:opacity .3s;}
+.gallery-item:hover .gallery-caption{opacity:1;}
+
+/* SERVICES */
+#servicos{padding:8rem 3rem;background:var(--cream);}
+.svc-intro{display:flex;align-items:flex-start;gap:6rem;margin-bottom:5rem;}
+.svc-intro-left h2{font-family:var(--fs);font-size:clamp(2.5rem,4vw,4rem);font-weight:400;line-height:1;letter-spacing:-0.02em;}
+.svc-intro-left h2 em{font-style:italic;color:var(--mauve);}
+.svc-intro-right{max-width:320px;margin-top:1.5rem;}
+.svc-intro-right p{font-size:0.92rem;color:var(--muted);line-height:1.9;}
+.svc-label{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--mauve);margin-bottom:1.2rem;font-weight:500;}
+.svc-stagger{display:flex;flex-direction:column;gap:0;}
+.svc-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);}
+.svc-cell{padding:2.5rem 2rem;border-right:1px solid var(--border);position:relative;transition:background .3s;}
+.svc-cell:last-child{border-right:none;}
+.svc-cell:hover{background:var(--blush);}
+.svc-num{font-family:var(--fs);font-size:3rem;font-weight:400;font-style:italic;color:rgba(193,124,116,0.12);line-height:1;position:absolute;top:1.5rem;right:1.5rem;}
+.svc-cell h3{font-family:var(--fs);font-size:1.25rem;font-weight:400;margin-bottom:0.5rem;}
+.svc-cell h3 em{font-style:italic;color:var(--mauve);}
+.svc-cell p{font-size:0.82rem;color:var(--muted);line-height:1.8;margin-bottom:1rem;}
+.svc-from{font-family:var(--fs);font-size:0.9rem;font-style:italic;color:var(--mauve);}
+
+/* ABOUT */
+#sobre{position:relative;height:90vh;min-height:600px;overflow:hidden;}
+.sobre-bg{position:absolute;inset:0;background:linear-gradient(135deg,#e8cfc8 0%,#d4a5a0 40%,#c9968e 100%);}
+.sobre-bg-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.35;}
+.sobre-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(253,248,245,0.92) 0%,rgba(253,248,245,0.6) 45%,transparent 100%);}
+.sobre-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 5rem;max-width:600px;}
+.sobre-content h2{font-family:var(--fs);font-size:clamp(2.5rem,4.5vw,4.5rem);font-weight:400;line-height:0.95;letter-spacing:-0.02em;margin-bottom:2rem;}
+.sobre-content h2 em{font-style:italic;color:var(--mauve);}
+.sobre-content p{font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:1rem;}
+.sobre-content p strong{color:var(--ink);font-weight:500;}
+.certs{margin-top:2rem;display:flex;flex-direction:column;gap:0.6rem;}
+.cert{font-size:0.8rem;color:#5c3d3d;display:flex;align-items:flex-start;gap:0.65rem;}
+.cert::before{content:"star";color:var(--mauve);font-size:0.5rem;margin-top:0.35rem;flex-shrink:0;}
+.sobre-floats{position:absolute;right:5rem;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:2.5rem;align-items:flex-end;}
+.sfloat{text-align:right;}
+.sfloat-n{font-family:var(--fs);font-size:3.5rem;font-weight:400;font-style:italic;color:var(--mauve);line-height:1;}
+.sfloat-l{font-size:0.62rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;}
+
+/* TESTIMONIAL TICKER */
+.testi-ticker-wrap{background:var(--deep);overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);}
+.testi-ticker{display:flex;white-space:nowrap;animation:ticker 42s linear infinite;}
+.testi-ticker:hover{animation-play-state:paused;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.testi-item{display:inline-flex;align-items:center;gap:1.5rem;padding:2.2rem 3rem;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+.testi-stars{color:var(--rose);font-size:0.7rem;letter-spacing:0.08em;}
+.testi-quote{font-family:var(--fs);font-size:0.95rem;font-style:italic;color:rgba(255,255,255,0.8);max-width:340px;white-space:normal;line-height:1.5;}
+.testi-author{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.4rem;white-space:nowrap;}
+
+/* INSTAGRAM */
+#instagram{padding:7rem 3rem;background:var(--warm);}
+.ig-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
+.ig-handle{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--mauve);text-decoration:none;font-weight:500;transition:color .2s;}
+.ig-handle:hover{color:var(--deep);}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:250px 250px;gap:3px;background:var(--sand);}
+.ig-post{position:relative;overflow:hidden;cursor:pointer;}
+.ig-post-inner{width:100%;height:100%;transition:transform .4s;}
+.ig-post:hover .ig-post-inner{transform:scale(1.06);}
+.ig-post-ov{position:absolute;inset:0;background:rgba(193,124,116,0.65);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.ig-post:hover .ig-post-ov{opacity:1;}
+.ig-post-ov svg{width:28px;height:28px;fill:#fff;}
+.ig-hdr{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:7px;padding:8px 10px;background:linear-gradient(to bottom,rgba(253,248,245,0.9),transparent);z-index:2;}
+.ig-av{width:22px;height:22px;border-radius:50%;background:var(--mauve);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ig-av svg{width:11px;height:11px;fill:#fff;}
+.ig-user{font-size:0.62rem;font-weight:600;color:var(--ink);letter-spacing:0.02em;}
+.ig-ftr{position:absolute;bottom:0;left:0;right:0;padding:8px 10px 10px;background:linear-gradient(to top,rgba(139,74,74,0.65),transparent);z-index:2;}
+.ig-cap{font-size:0.62rem;color:rgba(255,255,255,0.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ig-lk{font-size:0.58rem;color:rgba(255,255,255,0.6);margin-top:2px;}
+.ig-btns{display:flex;gap:1rem;margin-top:2rem;justify-content:center;flex-wrap:wrap;}
+
+/* BOOKING */
+#agendar{min-height:100vh;background:var(--blush);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 3rem;text-align:center;position:relative;overflow:hidden;}
+#agendar::before{content:"";position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;border-radius:50%;border:1px solid rgba(193,124,116,0.12);pointer-events:none;}
+#agendar::after{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(193,124,116,0.1);pointer-events:none;}
+.book-eyebrow{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--mauve);margin-bottom:2rem;font-weight:500;}
+.book-h2{font-family:var(--fs);font-size:clamp(3rem,6vw,6rem);font-weight:400;line-height:0.92;letter-spacing:-0.03em;margin-bottom:2rem;color:var(--ink);}
+.book-h2 em{font-style:italic;color:var(--mauve);}
+.book-sub{font-size:0.95rem;color:var(--muted);line-height:1.85;max-width:480px;margin:0 auto 3.5rem;}
+.book-contacts{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;}
+.bc-item{text-align:center;}
+.bc-icon{font-size:1.2rem;margin-bottom:0.5rem;}
+.bc-label{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.2rem;}
+.bc-val{font-family:var(--fs);font-size:1rem;font-style:italic;color:var(--ink);}
+.bc-link{text-decoration:none;color:inherit;}
+.bc-link:hover .bc-val{color:var(--mauve);}
+.book-form{width:100%;max-width:540px;margin:0 auto;}
+.bf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.bf-full{margin-bottom:1rem;}
+.bf-input{width:100%;background:rgba(255,255,255,0.7);border:none;border-bottom:1px solid var(--dusty);color:var(--ink);padding:0.8rem 0;font-family:var(--fs);font-size:0.92rem;font-style:italic;outline:none;transition:border-color .2s;}
+.bf-input::placeholder{color:rgba(139,74,74,0.35);}
+.bf-input:focus{border-color:var(--mauve);}
+select.bf-input{appearance:none;}
+select.bf-input option{font-style:normal;}
+textarea.bf-input{resize:none;}
+.btn-send{font-family:var(--fb);font-size:0.68rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:1.1rem 3rem;background:var(--mauve);color:#fff;border:none;cursor:pointer;transition:background .3s,transform .2s;width:100%;}
+.btn-send:hover{background:var(--deep);transform:translateY(-2px);}
+
+/* FOOTER */
+footer{background:var(--ink);padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;padding-right:5rem;}
+.footer-logo{font-family:var(--fs);font-size:1.1rem;color:rgba(255,255,255,0.3);font-style:italic;}
+.footer-socials{display:flex;gap:1.2rem;}
+.footer-socials a{color:rgba(255,255,255,0.3);transition:color .2s;text-decoration:none;}
+.footer-socials a:hover{color:var(--rose);}
+footer p{font-size:0.6rem;color:rgba(255,255,255,0.2);letter-spacing:0.06em;}
+footer p a{color:rgba(255,255,255,0.35);text-decoration:none;transition:color .2s;}
+footer p a:hover{color:var(--rose);}
+
+/* WA */
+.wa-float{position:fixed;bottom:2rem;right:1.5rem;z-index:500;width:52px;height:52px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.38);transition:transform .2s;}
+.wa-float:hover{transform:scale(1.08);}
+.wa-float svg{width:25px;height:25px;fill:#fff;}
+
+/* LGPD */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:var(--ink);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;border-top:2px solid var(--mauve);transform:translateY(100%);transition:transform .4s;}
+#cookie-banner.show{transform:translateY(0);}
+.ck-text{font-size:0.74rem;color:rgba(255,255,255,0.7);line-height:1.7;max-width:680px;}
+.ck-btns{display:flex;gap:.7rem;flex-shrink:0;}
+.ck-acc{font-family:var(--fb);font-size:0.6rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.6rem 1.3rem;background:var(--mauve);color:#fff;border:none;cursor:pointer;white-space:nowrap;}
+.ck-rej{font-family:var(--fb);font-size:0.6rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;padding:.6rem 1.3rem;background:transparent;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,.15);cursor:pointer;white-space:nowrap;}
+
+/* REVEALS */
+.rev{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.rev-l{opacity:0;transform:translateX(-28px);transition:opacity .7s ease,transform .7s ease;}
+.rev-r{opacity:0;transform:translateX(28px);transition:opacity .7s ease,transform .7s ease;}
+.rev.on,.rev-l.on,.rev-r.on{opacity:1;transform:none;}
+
+/* MOBILE */
+@media(max-width:860px){
+  nav{padding:1.1rem 1.5rem;}
+  .nav-links,.nav-book{display:none;}
+  .hamburger{display:flex;}
+  .hero{grid-template-columns:1fr;height:auto;min-height:100svh;}
+  .hero-img-col{height:45vh;}
+  .hero-right-col{padding:2rem 1.5rem 5rem;}
+  .hero-h1{font-size:clamp(2.8rem,10vw,5rem);}
+  .hero-title-wrap{padding:0 1.5rem 2rem;}
+  .hero-stat-row{right:1.5rem;top:1.5rem;}
+  .gallery-strip{height:240px;}
+  .gallery-item{flex:0 0 180px;}
+  .gallery-item.wide{flex:0 0 260px;}
+  #servicos{padding:5rem 1.5rem;}
+  .svc-intro{flex-direction:column;gap:2rem;margin-bottom:3rem;}
+  .svc-row{grid-template-columns:1fr;}
+  .svc-cell{border-right:none;border-bottom:1px solid var(--border);}
+  .sobre-content{padding:0 1.5rem;}
+  .sobre-floats{display:none;}
+  .ig-grid{grid-template-columns:1fr 1fr;grid-template-rows:160px 160px 160px;}
+  #instagram{padding:5rem 1.5rem;}
+  #agendar{padding:6rem 1.5rem;}
+  #agendar::before,#agendar::after{display:none;}
+  .bf-grid{grid-template-columns:1fr;}
+  .book-contacts{gap:2rem;}
+  footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}
+  #cookie-banner{flex-direction:column;align-items:flex-start;padding:1.2rem 1.5rem;}
+  .ck-btns{width:100%;}
+  .ck-acc,.ck-rej{flex:1;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Studio <em>Ambar</em></a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Servicos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#instagram">Portfolio</a></li>
+    <li><a href="#agendar">Contato</a></li>
+  </ul>
+  <a href="#agendar" class="nav-book">Agendar</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-menu" id="mob-menu">
+    <a href="#servicos" onclick="toggleMenu()">Servicos</a>
+    <a href="#sobre" onclick="toggleMenu()">Sobre</a>
+    <a href="#instagram" onclick="toggleMenu()">Portfolio</a>
+    <a href="#agendar" onclick="toggleMenu()">Agendar</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-img-col">
+    <svg class="hero-img-svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f0dbd4"/><stop offset="60%" stop-color="#d4a09a"/><stop offset="100%" stop-color="#c49088"/></linearGradient></defs>
+      <rect width="600" height="800" fill="url(#hg)"/>
+      <circle cx="300" cy="350" r="200" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1"/>
+      <circle cx="300" cy="350" r="140" fill="rgba(228,185,175,0.15)" stroke="rgba(193,124,116,0.18)" stroke-width="1"/>
+      <ellipse cx="300" cy="310" rx="14" ry="36" fill="rgba(193,124,116,0.28)"/>
+      <ellipse cx="340" cy="350" rx="14" ry="36" fill="rgba(193,124,116,0.28)" transform="rotate(90 300 350)"/>
+      <ellipse cx="300" cy="390" rx="14" ry="36" fill="rgba(193,124,116,0.28)" transform="rotate(180 300 350)"/>
+      <ellipse cx="260" cy="350" rx="14" ry="36" fill="rgba(193,124,116,0.28)" transform="rotate(270 300 350)"/>
+      <ellipse cx="328" cy="322" rx="10" ry="28" fill="rgba(193,124,116,0.18)" transform="rotate(45 300 350)"/>
+      <ellipse cx="272" cy="378" rx="10" ry="28" fill="rgba(193,124,116,0.18)" transform="rotate(225 300 350)"/>
+      <ellipse cx="278" cy="322" rx="10" ry="28" fill="rgba(193,124,116,0.18)" transform="rotate(315 300 350)"/>
+      <ellipse cx="322" cy="378" rx="10" ry="28" fill="rgba(193,124,116,0.18)" transform="rotate(135 300 350)"/>
+      <circle cx="300" cy="350" r="18" fill="rgba(193,124,116,0.5)"/>
+      <circle cx="300" cy="350" r="8" fill="rgba(228,185,175,0.8)"/>
+      <g opacity="0.35">
+        <circle cx="100" cy="150" r="20" fill="none" stroke="rgba(193,124,116,0.5)" stroke-width="1"/>
+        <ellipse cx="100" cy="132" rx="5" ry="14" fill="rgba(193,124,116,0.4)"/>
+        <ellipse cx="118" cy="150" rx="5" ry="14" fill="rgba(193,124,116,0.4)" transform="rotate(90 100 150)"/>
+        <ellipse cx="100" cy="168" rx="5" ry="14" fill="rgba(193,124,116,0.4)" transform="rotate(180 100 150)"/>
+        <ellipse cx="82" cy="150" rx="5" ry="14" fill="rgba(193,124,116,0.4)" transform="rotate(270 100 150)"/>
+        <circle cx="100" cy="150" r="6" fill="rgba(193,124,116,0.6)"/>
+      </g>
+      <g opacity="0.3">
+        <circle cx="490" cy="600" r="25" fill="none" stroke="rgba(193,124,116,0.4)" stroke-width="1"/>
+        <ellipse cx="490" cy="577" rx="6" ry="16" fill="rgba(193,124,116,0.35)"/>
+        <ellipse cx="513" cy="600" rx="6" ry="16" fill="rgba(193,124,116,0.35)" transform="rotate(90 490 600)"/>
+        <ellipse cx="490" cy="623" rx="6" ry="16" fill="rgba(193,124,116,0.35)" transform="rotate(180 490 600)"/>
+        <ellipse cx="467" cy="600" rx="6" ry="16" fill="rgba(193,124,116,0.35)" transform="rotate(270 490 600)"/>
+        <circle cx="490" cy="600" r="7" fill="rgba(193,124,116,0.55)"/>
+      </g>
+      <circle cx="150" cy="500" r="3" fill="rgba(193,124,116,0.3)"/>
+      <circle cx="450" cy="200" r="3" fill="rgba(193,124,116,0.3)"/>
+      <rect x="168" y="640" width="22" height="75" rx="11" fill="rgba(193,124,116,0.12)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/>
+      <rect x="196" y="620" width="22" height="90" rx="11" fill="rgba(193,124,116,0.12)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/>
+      <rect x="224" y="630" width="22" height="82" rx="11" fill="rgba(193,124,116,0.10)" stroke="rgba(193,124,116,0.18)" stroke-width="1"/>
+      <text x="300" y="760" font-family="Playfair Display,serif" font-size="14" font-style="italic" fill="rgba(193,124,116,0.3)" text-anchor="middle" letter-spacing="4">Studio Ambar</text>
+    </svg>
+  </div>
+  <div class="hero-title-wrap">
+    <h1 class="hero-h1">
+      <span>Unhas</span>
+      <span>que <em>falam</em></span>
+      <span>por voce.</span>
+    </h1>
+  </div>
+  <div class="hero-right-col">
+    <div class="hero-stat-row">
+      <div class="hero-stat"><div class="hero-stat-n">5+</div><div class="hero-stat-l">Anos de arte</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">800+</div><div class="hero-stat-l">Clientes</div></div>
+    </div>
+    <div class="hero-eyebrow">Nail Designer - Sao Paulo</div>
+    <p class="hero-desc">Nail art exclusiva e personalizada para quem acredita que cada detalhe importa. Do minimalismo ao elaborado, sempre com elegancia.</p>
+    <div class="hero-actions">
+      <a href="#agendar" class="btn-fill">Agendar agora</a>
+      <a href="#servicos" class="btn-line">Ver servicos</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-hint-line"></div></div>
+</section>
+
+<div class="gallery-strip" id="galleryStrip">
+  <div class="gallery-item wide"><div class="gallery-item-inner"><svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#f0dbd4;" preserveAspectRatio="xMidYMid slice"><circle cx="180" cy="145" r="85" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><ellipse cx="180" cy="108" rx="12" ry="30" fill="rgba(193,124,116,0.28)"/><ellipse cx="217" cy="145" rx="12" ry="30" fill="rgba(193,124,116,0.28)" transform="rotate(90 180 145)"/><ellipse cx="180" cy="182" rx="12" ry="30" fill="rgba(193,124,116,0.28)" transform="rotate(180 180 145)"/><ellipse cx="143" cy="145" rx="12" ry="30" fill="rgba(193,124,116,0.28)" transform="rotate(270 180 145)"/><circle cx="180" cy="145" r="14" fill="rgba(193,124,116,0.5)"/><text x="180" y="290" font-family="Playfair Display,serif" font-size="11" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle" letter-spacing="2">Nail Art Floral</text></svg></div><div class="gallery-caption">Encapsulado floral - petelas reais</div></div>
+  <div class="gallery-item"><div class="gallery-item-inner"><svg viewBox="0 0 250 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#ead6cf;" preserveAspectRatio="xMidYMid slice"><path d="M55 270 Q125 130 195 210" fill="none" stroke="rgba(193,124,116,0.3)" stroke-width="2"/><rect x="97" y="92" width="56" height="84" rx="28" fill="rgba(228,185,175,0.45)" stroke="rgba(193,124,116,0.3)" stroke-width="1.2"/><rect x="100" y="95" width="50" height="36" rx="25" fill="rgba(212,165,160,0.55)" stroke="rgba(193,124,116,0.22)" stroke-width="1"/><text x="125" y="285" font-family="Playfair Display,serif" font-size="11" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle" letter-spacing="2">Baby Boomer</text></svg></div><div class="gallery-caption">Baby Boomer classico</div></div>
+  <div class="gallery-item"><div class="gallery-item-inner"><svg viewBox="0 0 250 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#e5d2cb;" preserveAspectRatio="xMidYMid slice"><circle cx="125" cy="138" r="58" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1" stroke-dasharray="4 4"/><rect x="95" y="92" width="60" height="92" rx="30" fill="rgba(193,124,116,0.18)" stroke="rgba(193,124,116,0.28)" stroke-width="1.2"/><rect x="98" y="95" width="54" height="38" rx="27" fill="rgba(228,185,175,0.5)" stroke="rgba(193,124,116,0.22)" stroke-width="1"/><circle cx="110" cy="112" r="3" fill="rgba(193,124,116,0.4)"/><circle cx="125" cy="109" r="3.5" fill="rgba(193,124,116,0.5)"/><circle cx="140" cy="112" r="3" fill="rgba(193,124,116,0.4)"/><text x="125" y="285" font-family="Playfair Display,serif" font-size="11" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle" letter-spacing="2">Encapsulado</text></svg></div><div class="gallery-caption">Encapsulado glitter rose</div></div>
+  <div class="gallery-item wide"><div class="gallery-item-inner"><svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#f2e5e0;" preserveAspectRatio="xMidYMid slice"><path d="M70 290 Q180 150 290 240" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1.5"/><rect x="145" y="95" width="70" height="105" rx="35" fill="rgba(228,185,175,0.4)" stroke="rgba(193,124,116,0.28)" stroke-width="1.2"/><rect x="148" y="98" width="64" height="46" rx="32" fill="rgba(212,165,160,0.5)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><path d="M155 120 Q180 108 205 120" fill="none" stroke="rgba(193,124,116,0.45)" stroke-width="1.5" stroke-linecap="round"/><circle cx="163" cy="110" r="3" fill="rgba(193,124,116,0.4)"/><circle cx="180" cy="107" r="3.5" fill="rgba(193,124,116,0.5)"/><circle cx="197" cy="110" r="3" fill="rgba(193,124,116,0.4)"/><text x="180" y="290" font-family="Playfair Display,serif" font-size="12" font-style="italic" fill="rgba(193,124,116,0.45)" text-anchor="middle" letter-spacing="2">Press-on Noiva</text></svg></div><div class="gallery-caption">Press-on colecao noiva</div></div>
+  <div class="gallery-item"><div class="gallery-item-inner"><svg viewBox="0 0 250 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#ead0c9;" preserveAspectRatio="xMidYMid slice"><circle cx="125" cy="143" r="52" fill="rgba(193,124,116,0.1)" stroke="rgba(193,124,116,0.2)" stroke-width="1" stroke-dasharray="3 3"/><rect x="95" y="90" width="60" height="92" rx="30" fill="rgba(193,124,116,0.15)" stroke="rgba(193,124,116,0.25)" stroke-width="1.2"/><rect x="98" y="93" width="54" height="38" rx="27" fill="rgba(228,185,175,0.45)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><line x1="103" y1="108" x2="149" y2="108" stroke="rgba(193,124,116,0.3)" stroke-width="0.8"/><line x1="105" y1="116" x2="147" y2="116" stroke="rgba(193,124,116,0.2)" stroke-width="0.8"/><text x="125" y="285" font-family="Playfair Display,serif" font-size="11" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle" letter-spacing="2">Ombre</text></svg></div><div class="gallery-caption">Ombre nude atemporal</div></div>
+</div>
+
+<section id="servicos">
+  <div class="svc-intro rev">
+    <div class="svc-intro-left">
+      <div class="svc-label">Servicos</div>
+      <h2>Arte em<br>cada <em>detalhe.</em></h2>
+    </div>
+    <div class="svc-intro-right">
+      <p>Do acabamento minimalista ao mais elaborado, cada servico e realizado com produtos importados e tecnica apurada.</p>
+    </div>
+  </div>
+  <div class="svc-stagger">
+    <div class="svc-row">
+      <div class="svc-cell rev"><div class="svc-num">01</div><h3>Alongamento<br><em>em Gel</em></h3><p>Extensao com gel premium para comprimento e elegancia duradouros. Acabamento natural e resistente.</p><div class="svc-from">A partir de R$ 180</div></div>
+      <div class="svc-cell rev"><div class="svc-num">02</div><h3>Nail Art<br><em>Personalizada</em></h3><p>Designs exclusivos criados para voce. Flores, texturas, joias. Do minimalismo ao elaborado.</p><div class="svc-from">A partir de R$ 120</div></div>
+      <div class="svc-cell rev"><div class="svc-num">03</div><h3>Encapsulado<br><em>&amp; Fibra</em></h3><p>Flores secas, glitters e elementos encapsulados em resina de alta qualidade. Premium e exclusivo.</p><div class="svc-from">A partir de R$ 220</div></div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-cell rev"><div class="svc-num">04</div><h3>Baby Boomer<br><em>&amp; Ombre</em></h3><p>Degrade suave e sofisticado que nunca sai de moda. Tecnica impecavel, resultado atemporal.</p><div class="svc-from">A partir de R$ 150</div></div>
+      <div class="svc-cell rev"><div class="svc-num">05</div><h3>Press-on<br><em>Personalizado</em></h3><p>Unhas sob medida para o seu tamanho e estilo. Perfeitas para eventos e quem ama renovar o visual.</p><div class="svc-from">A partir de R$ 250</div></div>
+      <div class="svc-cell rev"><div class="svc-num">06</div><h3>Manutencao<br><em>&amp; Remocao</em></h3><p>Cuidado especializado para preservar a saude das suas unhas naturais com produtos seguros.</p><div class="svc-from">A partir de R$ 80</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="sobre-bg">
+    <svg class="sobre-bg-svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="900" cy="350" r="300" fill="none" stroke="rgba(193,124,116,0.25)" stroke-width="1"/>
+      <circle cx="900" cy="350" r="200" fill="rgba(228,185,175,0.12)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/>
+      <ellipse cx="900" cy="278" rx="16" ry="55" fill="rgba(193,124,116,0.2)"/>
+      <ellipse cx="972" cy="350" rx="16" ry="55" fill="rgba(193,124,116,0.2)" transform="rotate(90 900 350)"/>
+      <ellipse cx="900" cy="422" rx="16" ry="55" fill="rgba(193,124,116,0.2)" transform="rotate(180 900 350)"/>
+      <ellipse cx="828" cy="350" rx="16" ry="55" fill="rgba(193,124,116,0.2)" transform="rotate(270 900 350)"/>
+      <circle cx="900" cy="350" r="25" fill="rgba(193,124,116,0.4)"/>
+    </svg>
+  </div>
+  <div class="sobre-overlay"></div>
+  <div class="sobre-content rev-l">
+    <div class="svc-label">Sobre mim</div>
+    <h2>Cada unha,<br>uma obra <em>de arte.</em></h2>
+    <p>Sou <strong>Isabela Ambar</strong>, nail designer apaixonada pela beleza nos detalhes. Com mais de 5 anos de experiencia, desenvolvi uma visao artistica unica para criar unhas que refletem a personalidade de cada cliente.</p>
+    <p>Trabalho com produtos importados de alta qualidade e me atualizo constantemente nas tecnicas e tendencias nacionais e internacionais.</p>
+    <div class="certs">
+      <div class="cert">Formada pelo Instituto de Nail Art de Sao Paulo</div>
+      <div class="cert">Certificada em Tecnicas Japonesas de Nail Art</div>
+      <div class="cert">Parceira oficial OPI e CND</div>
+      <div class="cert">Especialista em unhas para noivas e eventos</div>
+    </div>
+  </div>
+  <div class="sobre-floats rev-r">
+    <div class="sfloat"><div class="sfloat-n">5+</div><div class="sfloat-l">Anos</div></div>
+    <div class="sfloat"><div class="sfloat-n">800+</div><div class="sfloat-l">Clientes</div></div>
+    <div class="sfloat"><div class="sfloat-n">100%</div><div class="sfloat-l">Premium</div></div>
+  </div>
+</section>
+
+<div class="testi-ticker-wrap">
+  <div class="testi-ticker">
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"A Isabela transformou minhas unhas do casamento em verdadeiras obras de arte. Encapsulados com flores reais."</div><div class="testi-author">Camila Rodrigues - Noiva</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Faco manutencao todo mes e nunca me decepciono. Ambiente acolhedor, tecnica impecavel, designs incriveis."</div><div class="testi-author">Mariana Silva - Cliente fiel</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Pedi um press-on personalizado e fui embora com as unhas mais bonitas que ja tive. Voltarei sempre!"</div><div class="testi-author">Fernanda Lima - Consultora</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Melhor nail designer de Sao Paulo. O baby boomer ficou perfeito para a minha formatura."</div><div class="testi-author">Ana Paula Costa - Formanda</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"A Isabela transformou minhas unhas do casamento em verdadeiras obras de arte. Encapsulados com flores reais."</div><div class="testi-author">Camila Rodrigues - Noiva</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Faco manutencao todo mes e nunca me decepciono. Ambiente acolhedor, tecnica impecavel, designs incriveis."</div><div class="testi-author">Mariana Silva - Cliente fiel</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Pedi um press-on personalizado e fui embora com as unhas mais bonitas que ja tive. Voltarei sempre!"</div><div class="testi-author">Fernanda Lima - Consultora</div></div></div>
+    <div class="testi-item"><div><div class="testi-stars">★★★★★</div><div class="testi-quote">"Melhor nail designer de Sao Paulo. O baby boomer ficou perfeito para a minha formatura."</div><div class="testi-author">Ana Paula Costa - Formanda</div></div></div>
+  </div>
+</div>
+
+<section id="instagram">
+  <div class="ig-header rev">
+    <div>
+      <div class="svc-label">Instagram</div>
+      <h2 style="font-family:var(--fs);font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.05;">Acompanhe o<br><em style="color:var(--mauve);">studio.</em></h2>
+    </div>
+    <a href="https://instagram.com/studioambar" target="_blank" rel="noopener" class="ig-handle">@studioambar</a>
+  </div>
+
+  <div class="ig-grid rev">
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#f2e4df;" preserveAspectRatio="xMidYMid slice"><circle cx="120" cy="105" r="55" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><ellipse cx="120" cy="82" rx="10" ry="25" fill="rgba(193,124,116,0.28)"/><ellipse cx="143" cy="105" rx="10" ry="25" fill="rgba(193,124,116,0.28)" transform="rotate(90 120 105)"/><ellipse cx="120" cy="128" rx="10" ry="25" fill="rgba(193,124,116,0.28)" transform="rotate(180 120 105)"/><ellipse cx="97" cy="105" rx="10" ry="25" fill="rgba(193,124,116,0.28)" transform="rotate(270 120 105)"/><circle cx="120" cy="105" r="12" fill="rgba(193,124,116,0.5)"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Floral</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Nail art floral - petelas reais</div><div class="ig-lk">1.2k likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#ead5ce;" preserveAspectRatio="xMidYMid slice"><path d="M55 200 Q120 90 185 160" fill="none" stroke="rgba(193,124,116,0.3)" stroke-width="2"/><rect x="92" y="68" width="56" height="84" rx="28" fill="rgba(228,185,175,0.45)" stroke="rgba(193,124,116,0.3)" stroke-width="1.2"/><rect x="95" y="71" width="50" height="36" rx="25" fill="rgba(212,165,160,0.55)" stroke="rgba(193,124,116,0.22)" stroke-width="1"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Baby Boomer</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Baby boomer classico</div><div class="ig-lk">987 likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#e5d0c9;" preserveAspectRatio="xMidYMid slice"><circle cx="120" cy="108" r="50" fill="none" stroke="rgba(193,124,116,0.18)" stroke-width="1" stroke-dasharray="3 3"/><rect x="91" y="65" width="58" height="88" rx="29" fill="rgba(193,124,116,0.17)" stroke="rgba(193,124,116,0.27)" stroke-width="1.2"/><rect x="94" y="68" width="52" height="36" rx="26" fill="rgba(228,185,175,0.5)" stroke="rgba(193,124,116,0.22)" stroke-width="1"/><circle cx="106" cy="82" r="3" fill="rgba(193,124,116,0.4)"/><circle cx="120" cy="79" r="3.5" fill="rgba(193,124,116,0.5)"/><circle cx="134" cy="82" r="3" fill="rgba(193,124,116,0.4)"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Encapsulado</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Encapsulado glitter rose</div><div class="ig-lk">2.1k likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#f5e8e3;" preserveAspectRatio="xMidYMid slice"><path d="M50 180 Q120 95 190 150" fill="none" stroke="rgba(193,124,116,0.25)" stroke-width="1.5"/><rect x="88" y="62" width="64" height="96" rx="32" fill="rgba(228,185,175,0.38)" stroke="rgba(193,124,116,0.26)" stroke-width="1.2"/><rect x="91" y="65" width="58" height="40" rx="29" fill="rgba(212,165,160,0.5)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><path d="M98 83 Q120 72 142 83" fill="none" stroke="rgba(193,124,116,0.45)" stroke-width="1.3" stroke-linecap="round"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Press-on</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Press-on noiva 2025</div><div class="ig-lk">3.4k likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#eacfc8;" preserveAspectRatio="xMidYMid slice"><circle cx="120" cy="108" r="52" fill="none" stroke="rgba(193,124,116,0.15)" stroke-width="1" stroke-dasharray="4 4"/><rect x="90" y="63" width="60" height="90" rx="30" fill="rgba(193,124,116,0.14)" stroke="rgba(193,124,116,0.24)" stroke-width="1.2"/><rect x="93" y="66" width="54" height="38" rx="27" fill="rgba(228,185,175,0.45)" stroke="rgba(193,124,116,0.2)" stroke-width="1"/><line x1="98" y1="81" x2="144" y2="81" stroke="rgba(193,124,116,0.3)" stroke-width="0.8"/><line x1="100" y1="89" x2="142" y2="89" stroke="rgba(193,124,116,0.2)" stroke-width="0.8"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Ombre</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Ombre rose delicado</div><div class="ig-lk">1.8k likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+    <div class="ig-post"><div class="ig-post-inner"><svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#edd8d0;" preserveAspectRatio="xMidYMid slice"><path d="M75 190 Q120 95 165 155" fill="none" stroke="rgba(193,124,116,0.2)" stroke-width="1.5"/><rect x="88" y="60" width="64" height="98" rx="32" fill="rgba(193,124,116,0.18)" stroke="rgba(193,124,116,0.28)" stroke-width="1.2"/><rect x="91" y="63" width="58" height="40" rx="29" fill="rgba(228,185,175,0.5)" stroke="rgba(193,124,116,0.22)" stroke-width="1"/><circle cx="104" cy="73" r="2.5" fill="rgba(193,124,116,0.35)"/><circle cx="120" cy="70" r="3" fill="rgba(193,124,116,0.45)"/><circle cx="136" cy="73" r="2.5" fill="rgba(193,124,116,0.35)"/><text x="120" y="215" font-family="Playfair Display,serif" font-size="10" font-style="italic" fill="rgba(193,124,116,0.5)" text-anchor="middle">Nail Art</text></svg></div><div class="ig-hdr"><div class="ig-av"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><span class="ig-user">studioambar</span></div><div class="ig-ftr"><div class="ig-cap">Nail art minimalista</div><div class="ig-lk">2.6k likes</div></div><div class="ig-post-ov"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+
+  </div>
+
+  <div class="ig-btns rev">
+    <a href="https://instagram.com/studioambar" target="_blank" rel="noopener" style="font-family:var(--fb);font-size:0.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.85rem 1.8rem;background:var(--ink);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;">Seguir no Instagram</a>
+    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" style="font-family:var(--fb);font-size:0.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.85rem 1.8rem;background:#25d366;color:#fff;text-decoration:none;">Agendar pelo WhatsApp</a>
+  </div>
+</section>
+
+<section id="agendar">
+  <p class="book-eyebrow">Agendamento</p>
+  <h2 class="book-h2 rev">Vamos criar<br>algo <em>incrivel</em><br>juntas?</h2>
+  <p class="book-sub rev">Traga suas referencias ou me deixe surpreender voce. Cada atendimento e uma experiencia personalizada do inicio ao fim.</p>
+  <div class="book-contacts rev">
+    <a href="https://wa.me/5511999999999" class="bc-link bc-item" target="_blank"><div class="bc-icon">&#128241;</div><div class="bc-label">WhatsApp</div><div class="bc-val">(11) 99999-9999</div></a>
+    <a href="https://instagram.com/studioambar" class="bc-link bc-item" target="_blank"><div class="bc-icon">&#128247;</div><div class="bc-label">Instagram</div><div class="bc-val">@studioambar</div></a>
+    <div class="bc-item"><div class="bc-icon">&#128205;</div><div class="bc-label">Localizacao</div><div class="bc-val">Jardins, Sao Paulo</div></div>
+  </div>
+  <form class="book-form rev" onsubmit="handleForm(event)">
+    <div class="bf-grid">
+      <input class="bf-input" type="text" placeholder="Seu nome" required/>
+      <input class="bf-input" type="tel" placeholder="(11) 99999-9999"/>
+    </div>
+    <div class="bf-full"><input class="bf-input" type="email" placeholder="seu@email.com" required/></div>
+    <div class="bf-full">
+      <select class="bf-input">
+        <option value="">Servico de interesse...</option>
+        <option>Alongamento em Gel</option>
+        <option>Nail Art Personalizada</option>
+        <option>Encapsulado e Fibra de Vidro</option>
+        <option>Baby Boomer e Ombre</option>
+        <option>Press-on Personalizado</option>
+        <option>Manutencao e Remocao</option>
+      </select>
+    </div>
+    <div class="bf-full"><textarea class="bf-input" placeholder="Conta o que voce tem em mente..."></textarea></div>
+    <button type="submit" class="btn-send" id="fbtn">Enviar mensagem</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">Studio Ambar</div>
+  <div class="footer-socials">
+    <a href="https://instagram.com/studioambar" target="_blank" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a href="https://wa.me/5511999999999" target="_blank" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+  </div>
+  <p>2026 - Studio Ambar - <a href="https://bharbarasouza.com" target="_blank">Website por Bharbara Souza</a></p>
+</footer>
+
+<a href="https://wa.me/5511999999999" class="wa-float" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<div id="cookie-banner" role="dialog">
+  <p class="ck-text">Utilizamos cookies essenciais para o funcionamento do site. Nao coletamos dados de rastreamento sem sua autorizacao. Ao continuar, voce concorda com nossa Politica de Privacidade em conformidade com a LGPD.</p>
+  <div class="ck-btns"><button class="ck-rej" onclick="cookieChoice(false)">Rejeitar</button><button class="ck-acc" onclick="cookieChoice(true)">Aceitar</button></div>
+</div>
+
+<script>
+window.addEventListener("scroll",function(){document.getElementById("nav").classList.toggle("scrolled",window.scrollY>60);});
+function toggleMenu(){var btn=document.getElementById("hamburger"),m=document.getElementById("mob-menu"),open=m.classList.contains("open");btn.classList.toggle("open",!open);m.classList.toggle("open",!open);}
+document.addEventListener("click",function(e){var btn=document.getElementById("hamburger"),m=document.getElementById("mob-menu");if(m&&m.classList.contains("open")&&!m.contains(e.target)&&!btn.contains(e.target)){btn.classList.remove("open");m.classList.remove("open");}});
+var strip=document.getElementById("galleryStrip");
+if(strip){var isDragging=false,startX,scrollLeft;strip.addEventListener("mousedown",function(e){isDragging=true;startX=e.pageX-strip.offsetLeft;scrollLeft=strip.scrollLeft;strip.classList.add("grabbing");});document.addEventListener("mouseup",function(){isDragging=false;strip.classList.remove("grabbing");});strip.addEventListener("mousemove",function(e){if(!isDragging)return;e.preventDefault();var x=e.pageX-strip.offsetLeft;strip.scrollLeft=scrollLeft-(x-startX);});}
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add("on");},i*80);});},{threshold:0.1});
+document.querySelectorAll(".rev,.rev-l,.rev-r").forEach(function(el){obs.observe(el);});
+function handleForm(e){e.preventDefault();var btn=document.getElementById("fbtn");btn.textContent="Mensagem enviada";btn.style.background="var(--deep)";e.target.reset();setTimeout(function(){btn.textContent="Enviar mensagem";btn.style.background="var(--mauve)";},3000);}
+(function(){var b=document.getElementById("cookie-banner");if(!b)return;if(!localStorage.getItem("lgpd"))setTimeout(function(){b.classList.add("show");},1200);})();
+function cookieChoice(a){localStorage.setItem("lgpd",a?"accepted":"rejected");var b=document.getElementById("cookie-banner");if(b){b.style.transition="transform .4s";b.style.transform="translateY(100%)";}}
+</script>
+</body>
+</html>
